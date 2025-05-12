@@ -1,5 +1,5 @@
 const apiUrl = "https://lanciweb.github.io/demo/api/pictures/";
-let card = document.querySelector(".card");
+let card = document.querySelector(".row");
 
 axios.get(apiUrl).then((resp) => {
   const posts = resp.data;
@@ -12,14 +12,19 @@ axios.get(apiUrl).then((resp) => {
     console.log(singlePost);
     const { title, date, url } = singlePost;
     console.log(title, date, url);
-    cardTemplate += `   <div class="imgcontainer">
-                            <img src="${url}" alt="${title}" width="300" height="300" />
-                            <img class="pin" src="./img/pin.svg" />
-                        </div>
-                        <div class="text">
-                            <p>"${date}"</p>
-                            <h3>"${title}"</h3>
-                        </div>`;
+    cardTemplate += `<div class="col">
+          <div class="card">
+            <div class="imgcontainer">
+              <img class="pin" src="./img/pin.svg" />
+              <img src="${url}" alt="${title}" />
+            </div>
+            <div class="text">
+              <p>${date}</p>
+              <h2>${title}</h2>
+            </div>
+          </div>
+        </div>`;
+
     console.log(cardTemplate);
   });
   card.innerHTML = cardTemplate;
