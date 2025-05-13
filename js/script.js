@@ -1,4 +1,7 @@
 const apiUrl = "https://lanciweb.github.io/demo/api/pictures/";
+const openModal = document.getElementById("open");
+const modalContainer = document.getElementById("modal_container");
+const closeModal = document.getElementById("close");
 
 //axios è una libreria che serve per effettuare richieste in HTTP
 //la prima parte fa la richiesta ad apiURL
@@ -9,6 +12,36 @@ axios.get(apiUrl).then((resp) => {
   const posts = resp.data;
   // console.log(posts);
   postPrinter(posts);
+
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => {
+    console.warn("sto ciclando");
+    console.log(card);
+
+    card.addEventListener("click", function () {
+      let textModal = "";
+      let curID = this.getAttribute("data-id");
+      console.log(curID);
+
+      let post = posts.find((object) => parseInt(curID) === object.id);
+      console.log(post);
+
+      modalContainer.innerHTML = textModal += modalTemaplate(post);
+      // modalTemaplate(posts)
+      modalContainer.classList.add("show");
+      console.log("add show");
+    });
+
+    closeModal.addEventListener("click", () => {
+      modalContainer.classList.remove("show");
+      console.log("remove show");
+    });
+  });
+});
+
+closeModal.addEventListener("click", () => {
+  modalContainer.classList.remove("show");
+  console.log("remove show");
 });
 
 function postPrinter(arr) {
@@ -29,17 +62,25 @@ function postPrinter(arr) {
 // destrutturiamo ogni oggetto che viene passato dentro questa funzione
 // ritorna un HTML con diversi parametri inseriti nel testo
 function postTemplate(post) {
-  const { title, date, url } = post;
+  const { title, date, url, id } = post;
   return `<div class="col">
-            <div class="card">
+            <div class="card" data-id="${id}">
               <div class="imgcontainer">
                 <img class="pin" src="./img/pin.svg" />
-                <img id="open" src="${url}" alt="${title}" />
+                <img src="${url}" alt="${title}" />
               </div>
               <div class="text">
                 <p>${date}</p>
                 <h2>${title}</h2>
               </div>
             </div>
+          </div>`;
+}
+
+function modalTemaplate(post) {
+  const { title, url } = post;
+  return `<div class="modal">
+            <button id="close">Close</button>
+            <img src="${url}" alt="${title}" />
           </div>`;
 }
