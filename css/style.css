@@ -54,6 +54,12 @@ button {
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  opacity: 0;
+}
+
+.modal-container.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .modal {
