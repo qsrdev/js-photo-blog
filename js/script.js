@@ -16,7 +16,7 @@ axios.get(apiUrl).then((resp) => {
           <div class="card">
             <div class="imgcontainer">
               <img class="pin" src="./img/pin.svg" />
-              <img src="${url}" alt="${title}" />
+              <img id="open" src="${url}" alt="${title}" />
             </div>
             <div class="text">
               <p>${date}</p>
