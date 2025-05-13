@@ -2,6 +2,7 @@ const apiUrl = "https://lanciweb.github.io/demo/api/pictures/";
 const openModal = document.getElementById("open");
 const modalContainer = document.getElementById("modal_container");
 const closeModal = document.getElementById("close");
+const modalImg = document.getElementById("modal-img");
 
 //axios è una libreria che serve per effettuare richieste in HTTP
 //la prima parte fa la richiesta ad apiURL
@@ -26,23 +27,20 @@ axios.get(apiUrl).then((resp) => {
       let post = posts.find((object) => parseInt(curID) === object.id);
       console.log(post);
 
-      modalContainer.innerHTML = textModal += modalTemaplate(post);
+      modalImg.src = post.url;
+      // modalContainer.innerHTML = textModal += modalTemaplate(post);
       // modalTemaplate(posts)
       modalContainer.classList.add("show");
       console.log("add show");
     });
-
-    closeModal.addEventListener("click", () => {
-      modalContainer.classList.remove("show");
-      console.log("remove show");
-    });
   });
+  console.log(closeModal);
 });
 
-closeModal.addEventListener("click", () => {
-  modalContainer.classList.remove("show");
-  console.log("remove show");
-});
+// closeModal.addEventListener("click", () => {
+//   modalContainer.classList.remove("show");
+//   console.log("remove show");
+// });
 
 function postPrinter(arr) {
   //prendo row element con il dom
@@ -64,23 +62,28 @@ function postPrinter(arr) {
 function postTemplate(post) {
   const { title, date, url, id } = post;
   return `<div class="col">
-            <div class="card" data-id="${id}">
-              <div class="imgcontainer">
-                <img class="pin" src="./img/pin.svg" />
-                <img src="${url}" alt="${title}" />
-              </div>
-              <div class="text">
-                <p>${date}</p>
-                <h2>${title}</h2>
-              </div>
-            </div>
-          </div>`;
+  <div class="card" data-id="${id}">
+  <div class="imgcontainer">
+  <img class="pin" src="./img/pin.svg" />
+  <img src="${url}" alt="${title}" />
+  </div>
+  <div class="text">
+  <p>${date}</p>
+  <h2>${title}</h2>
+  </div>
+  </div>
+  </div>`;
 }
 
 function modalTemaplate(post) {
   const { title, url } = post;
   return `<div class="modal">
-            <button id="close">Close</button>
-            <img src="${url}" alt="${title}" />
-          </div>`;
+  <button id="close">Close</button>
+  <img src="${url}" alt="${title}" />
+  </div>`;
 }
+
+closeModal.addEventListener("click", () => {
+  modalContainer.classList.remove("show");
+  console.log("remove show");
+});
